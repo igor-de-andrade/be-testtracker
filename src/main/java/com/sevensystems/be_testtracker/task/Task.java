@@ -1,8 +1,12 @@
 package com.sevensystems.be_testtracker.task;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sevensystems.be_testtracker.project.Project;
+import com.sevensystems.be_testtracker.testcase.TestCase;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +25,10 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TestCase> testCases = new ArrayList<>();
 
     public Task() {
 

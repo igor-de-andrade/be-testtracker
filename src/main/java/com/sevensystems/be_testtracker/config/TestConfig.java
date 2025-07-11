@@ -8,6 +8,9 @@ import com.sevensystems.be_testtracker.tag.TagRepository;
 import com.sevensystems.be_testtracker.task.Status;
 import com.sevensystems.be_testtracker.task.Task;
 import com.sevensystems.be_testtracker.task.TaskRepository;
+import com.sevensystems.be_testtracker.testcase.TestCase;
+import com.sevensystems.be_testtracker.testcase.TestCaseRepository;
+import com.sevensystems.be_testtracker.testcase.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +30,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     public TaskRepository taskRepository;
 
+    @Autowired
+    public TestCaseRepository testCaseRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -42,5 +48,9 @@ public class TestConfig implements CommandLineRunner {
         Task task1 = new Task(null, "PKW-48957", "Ajustar cor do botão", Status.TO_DO, null);
         Task task2 = new Task(null, "PKW-49756", "Ajustar redirecionamento", Status.COMPLETED, null);
         taskRepository.saveAll(Arrays.asList(task1, task2));
+
+        TestCase testCase1 = new TestCase(null, "Campos obrigatórios", null, null, Type.FUNCTIONAL, null);
+        TestCase testCase2 = new TestCase(null, "Recuperação de dados nulos", null, null, Type.FUNCTIONAL, null);
+        testCaseRepository.saveAll(Arrays.asList(testCase1, testCase2));
     }
 }
