@@ -2,6 +2,7 @@ package com.sevensystems.be_testtracker.project;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sevensystems.be_testtracker.tag.Tag;
+import com.sevensystems.be_testtracker.task.Task;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class Project {
     @JsonIgnore
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 
     public Project() {
     }
@@ -44,5 +49,9 @@ public class Project {
 
     public List<Tag> getTags() {
         return tags;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
     }
 }

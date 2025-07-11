@@ -5,6 +5,9 @@ import com.sevensystems.be_testtracker.project.ProjectRepository;
 import com.sevensystems.be_testtracker.tag.Color;
 import com.sevensystems.be_testtracker.tag.Tag;
 import com.sevensystems.be_testtracker.tag.TagRepository;
+import com.sevensystems.be_testtracker.task.Status;
+import com.sevensystems.be_testtracker.task.Task;
+import com.sevensystems.be_testtracker.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +24,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     public TagRepository tagRepository;
 
+    @Autowired
+    public TaskRepository taskRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -32,5 +38,9 @@ public class TestConfig implements CommandLineRunner {
         Tag tag1 = new Tag(null, "Cadastros", Color.BLUE, null);
         Tag tag2 = new Tag(null, "Autenticação", Color.RED, null);
         tagRepository.saveAll(Arrays.asList(tag1, tag2));
+
+        Task task1 = new Task(null, "PKW-48957", "Ajustar cor do botão", Status.TO_DO, null);
+        Task task2 = new Task(null, "PKW-49756", "Ajustar redirecionamento", Status.COMPLETED, null);
+        taskRepository.saveAll(Arrays.asList(task1, task2));
     }
 }
