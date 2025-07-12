@@ -13,11 +13,13 @@ import com.sevensystems.be_testtracker.testbattery.TestBatteryRepository;
 import com.sevensystems.be_testtracker.testcase.TestCase;
 import com.sevensystems.be_testtracker.testcase.TestCaseRepository;
 import com.sevensystems.be_testtracker.testcase.Type;
+import com.sevensystems.be_testtracker.testexecution.Result;
+import com.sevensystems.be_testtracker.testexecution.TestExecution;
+import com.sevensystems.be_testtracker.testexecution.TestExecutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.Instant;
 import java.util.Arrays;
 
 @Configuration
@@ -37,6 +39,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     public TestBatteryRepository testBatteryRepository;
+
+    @Autowired
+    public TestExecutionRepository testExecutionRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,5 +66,9 @@ public class TestConfig implements CommandLineRunner {
         TestBattery testBattery1 = new TestBattery(null, "1ª bateria", null);
         TestBattery testBattery2 = new TestBattery(null, "2ª bateria", null);
         testBatteryRepository.saveAll(Arrays.asList(testBattery1, testBattery2));
+
+        TestExecution testExecution1 = new TestExecution(null, Result.PASS, null, null, null, null);
+        TestExecution testExecution2 = new TestExecution(null, Result.FAIL, "O tamanho da fonte está fora do padrão do projeto", "hawjaw-98754-cmd82ye", null, null);
+        testExecutionRepository.saveAll(Arrays.asList(testExecution1, testExecution2));
     }
 }

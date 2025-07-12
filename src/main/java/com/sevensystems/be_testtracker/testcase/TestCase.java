@@ -1,9 +1,13 @@
 package com.sevensystems.be_testtracker.testcase;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sevensystems.be_testtracker.task.Status;
 import com.sevensystems.be_testtracker.task.Task;
+import com.sevensystems.be_testtracker.testexecution.TestExecution;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +29,10 @@ public class TestCase {
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "testCase", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TestExecution> testExecutions = new ArrayList<>();
 
     public TestCase() {
 
@@ -77,5 +85,9 @@ public class TestCase {
 
     public Task getTask() {
         return task;
+    }
+
+    public List<TestExecution> getTestExecutions() {
+        return testExecutions;
     }
 }
