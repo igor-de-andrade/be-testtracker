@@ -8,6 +8,8 @@ import com.sevensystems.be_testtracker.tag.TagRepository;
 import com.sevensystems.be_testtracker.task.Status;
 import com.sevensystems.be_testtracker.task.Task;
 import com.sevensystems.be_testtracker.task.TaskRepository;
+import com.sevensystems.be_testtracker.testbattery.TestBattery;
+import com.sevensystems.be_testtracker.testbattery.TestBatteryRepository;
 import com.sevensystems.be_testtracker.testcase.TestCase;
 import com.sevensystems.be_testtracker.testcase.TestCaseRepository;
 import com.sevensystems.be_testtracker.testcase.Type;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     public TestCaseRepository testCaseRepository;
 
+    @Autowired
+    public TestBatteryRepository testBatteryRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -52,5 +57,9 @@ public class TestConfig implements CommandLineRunner {
         TestCase testCase1 = new TestCase(null, "Campos obrigatórios", null, null, Type.FUNCTIONAL, null);
         TestCase testCase2 = new TestCase(null, "Recuperação de dados nulos", null, null, Type.FUNCTIONAL, null);
         testCaseRepository.saveAll(Arrays.asList(testCase1, testCase2));
+
+        TestBattery testBattery1 = new TestBattery(null, "1ª bateria", null);
+        TestBattery testBattery2 = new TestBattery(null, "2ª bateria", null);
+        testBatteryRepository.saveAll(Arrays.asList(testBattery1, testBattery2));
     }
 }
