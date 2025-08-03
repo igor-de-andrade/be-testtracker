@@ -46,9 +46,9 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Project project1 = new Project(null, "ContEasy");
-        Project project2 = new Project(null, "Pack Online");
-        Project project3 = new Project(null, "eContador");
+        Project project1 = new Project(null, "ContEasy", "CTE");
+        Project project2 = new Project(null, "Pack Online", "PON");
+        Project project3 = new Project(null, "eContador", "PKW");
         projectRepository.saveAll(Arrays.asList(project1, project2, project3));
 
         Tag tag1 = new Tag(null, "Cadastros", Color.BLUE, null);

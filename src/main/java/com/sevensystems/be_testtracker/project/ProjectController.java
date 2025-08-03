@@ -17,19 +17,19 @@ public class ProjectController {
     public ProjectService service;
 
     @GetMapping
-    public ResponseEntity<List<Project>> findAll() {
-        List<Project> projects = service.findAll();
+    public ResponseEntity<List<ProjectDTO>> findAll() {
+        List<ProjectDTO> projects = service.findAll();
         return ResponseEntity.ok().body(projects);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> findById(@PathVariable UUID id) {
-        Project project = service.findById(id);
+    public ResponseEntity<ProjectDTO> findById(@PathVariable UUID id) {
+        ProjectDTO project = service.findById(id);
         return ResponseEntity.ok().body(project);
     }
 
     @PostMapping()
-    public ResponseEntity<Project> insert(@RequestBody Project obj) {
+    public ResponseEntity<ProjectDTO> insert(@RequestBody ProjectDTO obj) {
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(obj.getId()).toUri();
@@ -37,7 +37,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> update(@PathVariable UUID id, @RequestBody Project obj) {
+    public ResponseEntity<ProjectDTO> update(@PathVariable UUID id, @RequestBody ProjectDTO obj) {
         obj = service.update(id, obj);
         return ResponseEntity.ok().body(obj);
     }

@@ -13,28 +13,45 @@ public class ProjectService {
     @Autowired
     private ProjectRepository repository;
 
-    public List<Project> findAll() {
-        return repository.findAll();
+    @Autowired
+    private ProjectValidator validator;
+
+    public List<ProjectDTO> findAll() {
+        List<Project> projects = repository.findAll();
+        return projects.stream().map(ProjectDTO::new).toList();
     }
 
-    public Project findById(UUID id) {
-        return repository.findById(id)
+    public ProjectDTO findById(UUID id) {
+        Project project = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Não foi encontrado nenhum projeto com o ID: " + id));
+        return new ProjectDTO(project);
     }
 
-    public Project insert(Project obj) {
-        Project project = new Project(null, obj.getName());
+    public List<ProjectDTO> findByIdentifier(String identifier) {
+        List<Project> projects = repository.findByIdentifier(identifier);
+        return projects.stream().map(ProjectDTO::new).toList();
+    }
+
+    public ProjectDTO insert(ProjectDTO obj) {
+        obj.format();
+
+        validator.create(obj);
+        Project project = new Project(null, obj.getName(), obj.getIdentifier());
         project = repository.save(project);
 
-        return project;
+        return new ProjectDTO(project);
     }
 
-    public Project update(UUID id, Project obj) {
-        Project entity = this.findById(id);
+    public ProjectDTO update(UUID id, ProjectDTO obj) {
+        obj.format();
+        validator.update(obj);
+
+        Project entity = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Não foi encontrado nenhum projeto com o ID: " + id));
         updateData(entity, obj);
         entity = repository.save(entity);
 
-        return entity;
+        return new ProjectDTO(entity);
     }
 
     public void delete(UUID id) {
@@ -44,7 +61,7 @@ public class ProjectService {
         repository.deleteById(id);
     }
 
-    private void updateData(Project entity, Project obj) {
+    private void updateData(Project entity, ProjectDTO obj) {
         entity.setName(obj.getName());
     }
 

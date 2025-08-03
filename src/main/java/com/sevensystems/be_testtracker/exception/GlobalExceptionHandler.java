@@ -20,4 +20,14 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Map<String, Object>> handleValidation(ValidationException exception) {
+        Map<String, Object> body = Map.of(
+                "timestamp", Instant.now(),
+                "status", HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "errors", exception.getErrors()
+        );
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
+    }
 }

@@ -19,6 +19,8 @@ public class Project {
 
     private String name;
 
+    private String identifier;
+
     @JsonIgnore
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
@@ -30,9 +32,10 @@ public class Project {
     public Project() {
     }
 
-    public Project(UUID id, String name) {
+    public Project(UUID id, String name, String identifier) {
         this.id = id;
         this.name = name;
+        this.identifier = identifier;
     }
 
     public UUID getId() {
@@ -45,6 +48,14 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String name) {
+        this.identifier = identifier;
     }
 
     public List<Tag> getTags() {
