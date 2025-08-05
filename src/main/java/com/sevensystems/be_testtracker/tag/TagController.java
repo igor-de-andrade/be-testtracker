@@ -1,7 +1,5 @@
 package com.sevensystems.be_testtracker.tag;
 
-import com.sevensystems.be_testtracker.project.Project;
-import com.sevensystems.be_testtracker.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,17 +29,17 @@ public class TagController {
     }
 
     @PostMapping()
-    public ResponseEntity<Tag> insert(@RequestBody Tag obj) {
-        obj = service.insert(obj);
+    public ResponseEntity<Tag> insert(@RequestBody TagDTO obj) {
+        Tag tag = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+        return ResponseEntity.created(uri).body(tag);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tag> update(@PathVariable UUID id, @RequestBody Tag obj) {
-        obj = service.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<Tag> update(@PathVariable UUID id, @RequestBody TagDTO obj) {
+        Tag tag = service.update(id, obj);
+        return ResponseEntity.ok().body(tag);
     }
 
     @DeleteMapping("/{id}")
